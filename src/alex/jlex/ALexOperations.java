@@ -57,6 +57,27 @@ public class ALexOperations {
 	public UnidadLexica unidadELT() {
 		return new UnidadLexicaUnivaluada(alex.fila(),ClaseLexica.ELT);     
 	}    
+	public UnidadLexica unidadBool() {
+		return new UnidadLexicaUnivaluada(alex.fila(),ClaseLexica.BOOL);     
+	}   
+	public UnidadLexica unidadInt() {
+		return new UnidadLexicaUnivaluada(alex.fila(),ClaseLexica.INT);     
+	}     
+	public UnidadLexica unidadAnd() {
+		return new UnidadLexicaUnivaluada(alex.fila(),ClaseLexica.AND);     
+	}     
+	public UnidadLexica unidadOr() {
+		return new UnidadLexicaUnivaluada(alex.fila(),ClaseLexica.OR);     
+	}    
+	public UnidadLexica unidadNot() {
+		return new UnidadLexicaUnivaluada(alex.fila(),ClaseLexica.NOT);     
+	}  
+	public UnidadLexica unidadTrue() {
+		return new UnidadLexicaUnivaluada(alex.fila(),ClaseLexica.TRUE);     
+	}   
+	public UnidadLexica unidadFalse() {
+		return new UnidadLexicaUnivaluada(alex.fila(),ClaseLexica.FALSE);     
+	}  
 	public UnidadLexica unidadSepSec() {
 		return new UnidadLexicaUnivaluada(alex.fila(),ClaseLexica.SEPSEC);     
 	}

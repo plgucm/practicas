@@ -8,6 +8,6 @@ public class UnidadLexicaMultivaluada extends UnidadLexica {
    }
   public String lexema() {return lexema;}
   public String toString() {
-    return "[clase:"+clase()+",fila:"+fila()+",col:"+columna()+",lexema:"+lexema()+"]";  
+    return "[clase:"+clase()+",fila:"+fila()+",lexema:"+lexema()+"]";  
   }
 }

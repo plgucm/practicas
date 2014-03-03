@@ -21,19 +21,24 @@ package alex.jlex;
 %init}
 
 letra  = ([A-Z]|[a-z])
-digitoPositivo = [1-9]
-digito = ({digitoPositivo}|0)
-parteEntera = {digitoPositivo}{digito}*
+digito = [0-9]
+parteEntera = {digito}+
 separador = [ \t\r\b\n]
-comentario = #[^\n]* 
 eq = \=\=
 neq = \!\=
 gt = \>
 egt = \>\=
 lt = \<
 elt = \<\=
+and = and
+or = or
+not = not
+bool = bool
+int = int
+true = true
+false = false
 sepsec = \&\&
-identificador = {letra}({letra}|{digito})*
+identificador = {letra}({letra}|{digito}|_)*
 numeroEntero = [\+,\-]?{parteEntera}
 operadorMas = \+
 operadorMenos = \-
@@ -45,14 +50,20 @@ asig = \=
 puntocoma  = \;
 %%
 {separador}               {}
-{comentario}              {}
 {eq}                      {return ops.unidadEQ();}
 {neq}                     {return ops.unidadNEQ();}
 {gt}                      {return ops.unidadGT();}
 {egt}                     {return ops.unidadEGT();}
 {lt}                      {return ops.unidadLT();}
 {elt}                     {return ops.unidadELT();}
-{sepsec}                     {return ops.unidadSepSec();}
+{and}                     {return ops.unidadAnd();}
+{or}                     {return ops.unidadOr();}
+{not}                     {return ops.unidadNot();}
+{bool}                     {return ops.unidadBool();}
+{int}                     {return ops.unidadInt();}
+{true}                     {return ops.unidadTrue();}
+{false}                     {return ops.unidadFalse();}
+{sepsec}                  {return ops.unidadSepSec();}
 {identificador}           {return ops.unidadId();}
 {numeroEntero}            {return ops.unidadEnt();}
 {operadorMas}             {return ops.unidadMas();}
