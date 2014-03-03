@@ -1,0 +1,29 @@
+Definiciones auxiliares:
+	letra -> A|B|...|Z|a|b|...|z|
+	digito -> 0|...|9
+	parteEntera -> digito+
+Definiciones de cadenas ignorables:
+	sep -> SP|TAB|NL
+	com -> #(!NL|!EOF)*
+Definiciones léxicas:
+	opSum -> \+
+	opRst -> -
+	opMul -> \*
+	opDiv -> /
+	opMay -> >
+	opMen -> <
+	opIgual -> ==
+	opNoIgual -> !=
+	opMayIgual -> >=
+	opMenIgual -> <=
+	expAnd -> and
+	expOr -> or
+	expNot -> not
+	expNeg -> -
+	sepSecciones -> &&
+	identificador -> (letra|_)(letra|digito|_)*
+	parApertura -> \(
+	parCierre -> \)
+	puntoComa -> ;
+	asignacion -> =
+	entero -> [+|-] parteEntera
