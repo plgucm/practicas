@@ -4,7 +4,6 @@ Definiciones auxiliares:
 	parteEntera -> digito+
 Definiciones de cadenas ignorables:
 	sep -> SP|TAB|NL
-	com -> #(!NL|!EOF)*
 Definiciones léxicas:
 	opSum -> \+
 	opRst -> -
@@ -21,7 +20,7 @@ Definiciones léxicas:
 	expNot -> not
 	expNeg -> -
 	sepSecciones -> &&
-	identificador -> (letra|_)(letra|digito|_)*
+	identificador -> letra (letra|digito|_)*
 	parApertura -> \(
 	parCierre -> \)
 	puntoComa -> ;
