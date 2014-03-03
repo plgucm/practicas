@@ -18,11 +18,11 @@ public class AnalizadorLexicoTiny {
 	private int filaActual;
 	private int columnaActual;
 	private Map<String, ClaseLexica> tokens;
-	private static String NL = System.getProperty("line.separator");
+	private static final String NL = System.getProperty("line.separator");
 
 	private static enum Estado {
-		INICIO, REC_ID, REC_MAS, REC_MENOS, REC_0, REC_ENT, REC_PUNTOCOMA, REC_PAP, REC_PCIERR,
-		REC_ASIG, REC_DIV, REC_MUL, REC_EOF, REC_PUNTOCOM, 
+		INICIO, REC_ID, REC_MAS, REC_MENOS, REC_ENT, REC_PUNTOCOMA, REC_PAP, REC_PCIERR,
+		REC_ASIG, REC_DIV, REC_MUL, REC_EOF, 
 		REC_HALFNEQ, REC_NEQ, REC_HALF_SEP_SEC, REC_SEP_SEC,
 		REC_GT, REC_EGT, REC_LT, REC_ELT, REC_EQ
 	}
@@ -39,6 +39,10 @@ public class AnalizadorLexicoTiny {
 		this.tokens.put("and", ClaseLexica.AND);
 		this.tokens.put("or", ClaseLexica.OR);
 		this.tokens.put("not", ClaseLexica.NOT);
+		this.tokens.put("bool", ClaseLexica.BOOL);
+		this.tokens.put("int", ClaseLexica.INT);
+		this.tokens.put("true", ClaseLexica.TRUE);
+		this.tokens.put("false", ClaseLexica.FALSE);
 	}
 
 	public UnidadLexica sigToken() throws IOException {
@@ -51,7 +55,6 @@ public class AnalizadorLexicoTiny {
 			case INICIO: 
 				if(hayLetra())  transita(Estado.REC_ID);
 				else if (hayDigitoPos()) transita(Estado.REC_ENT);
-				else if (hayCero()) transita(Estado.REC_0);
 				else if (haySuma()) transita(Estado.REC_MAS);
 				else if (hayResta()) transita(Estado.REC_MENOS);
 				else if (hayMul()) transita(Estado.REC_MUL);
@@ -60,8 +63,7 @@ public class AnalizadorLexicoTiny {
 				else if (hayPCierre()) transita(Estado.REC_PCIERR);
 				else if (hayAsig()) transita(Estado.REC_ASIG);
 				else if (hayPuntoComa()) transita(Estado.REC_PUNTOCOMA);
-				else if (hayAlmohadilla()) transitaIgnorando(Estado.REC_PUNTOCOM);
-				else if (haySep()) transitaIgnorando(Estado.INICIO);
+				else if (haySepTabNL()) transitaIgnorando(Estado.INICIO);
 				else if (hayEOF()) transita(Estado.REC_EOF);
 				else if (hayHalfneq()) transita(Estado.REC_HALFNEQ);
 				else if (hayHalfSepSec()) transita(Estado.REC_HALF_SEP_SEC);
@@ -83,15 +85,12 @@ public class AnalizadorLexicoTiny {
 				if (hayDigito()) transita(Estado.REC_ENT);
 				else return unidadEnt();
 				break;
-			case REC_0: return unidadEnt();
 			case REC_MAS:
 				if (hayDigitoPos()) transita(Estado.REC_ENT);
-				else if(hayCero()) transita(Estado.REC_0);
 				else return unidadMas();
 				break;
 			case REC_MENOS: 
 				if (hayDigitoPos()) transita(Estado.REC_ENT);
-				else if(hayCero()) transita(Estado.REC_0);
 				else return unidadMenos();
 				break;
 			case REC_MUL: return unidadPor();
@@ -103,12 +102,8 @@ public class AnalizadorLexicoTiny {
 				else return unidadAsig();
 			case REC_EQ:
 				return unidadEQ();	
-			case REC_PUNTOCOMA: return unidadPuntoComa();
-			case REC_PUNTOCOM: 
-				if (hayNL()) transitaIgnorando(Estado.INICIO);
-				else if (hayEOF()) transita(Estado.REC_EOF);
-				else transitaIgnorando(Estado.REC_PUNTOCOM);
-				break;
+			case REC_PUNTOCOMA: 
+				return unidadPuntoComa();
 			case REC_EOF: return unidadEof();
 			case REC_HALFNEQ:
 				if(haySecondhalfneq()) transita(Estado.REC_NEQ);
@@ -164,7 +159,7 @@ public class AnalizadorLexicoTiny {
 	}
 
 	private boolean hayLetra() {return sigCar >= 'a' && sigCar <= 'z' ||
-			sigCar >= 'A' && sigCar <= 'z';}
+			sigCar >= 'A' && sigCar <= 'Z';}
 	private boolean hayDigitoPos() {return sigCar >= '1' && sigCar <= '9';}
 	private boolean hayCero() {return sigCar == '0';}
 	private boolean hayDigito() {return hayDigitoPos() || hayCero();}
@@ -180,14 +175,12 @@ public class AnalizadorLexicoTiny {
 	private boolean hayGT() {return sigCar == '>';}
 	private boolean hayLT() {return sigCar == '<';}
 	private boolean hayPuntoComa() {return sigCar == ';';}
-	private boolean hayAlmohadilla() {return sigCar == '#';}
 	private boolean hayHalfSepSec() {return sigCar == '&';}
 	private boolean haySecondHalfEQ() {return sigCar == '=';}
 	private boolean haySecondHalfSepSec() {return sigCar == '&';}
 	private boolean haySecondHalfEGT() {return sigCar == '=';}
 	private boolean haySecondHalfLT() {return sigCar == '=';}
-	private boolean haySep() {return sigCar == ' ' || sigCar == '\t' || sigCar=='\n';}
-	private boolean hayNL() {return sigCar == '\r' || sigCar == '\b' || sigCar == '\n';}
+	private boolean haySepTabNL() {return sigCar == ' ' || sigCar == '\t' || sigCar=='\n';}
 	private boolean hayEOF() {return sigCar == -1;}
 
 	private UnidadLexica unidadId() {
