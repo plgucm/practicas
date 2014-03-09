@@ -16,8 +16,10 @@ public enum ClaseLexica {
 	PUNTOCOMA, 
 	/*CLs de Operaciones + - * / */
 	MAS, MENOS, POR, DIV, 
+	/*CL de asignación = */
+	ASIG, 
 	/*CL Separador de Secciones && */
-	ASIG, SEPSEC, 
+	SEPSEC, 
 	/*CLs de Operaciones Booleanas*/
 	AND, OR, NOT, 
 	/*CLs de Nombres de Clases*/
