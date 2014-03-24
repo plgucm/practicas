@@ -10,4 +10,4 @@ Participantes:
 
 License
 ===
-[GNU GPL Version 2](https://github.com/plgucm/practicas/blob/master/LICENSE), more [info](http://en.wikipedia.org/wiki/GNU_General_Public_License).
+[GNU GPL Version 2](https://github.com/plgucm/practica2/blob/master/LICENSE), more [info](http://en.wikipedia.org/wiki/GNU_General_Public_License).
